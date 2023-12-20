@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SharedService } from 'src/app/shared.service';
+import { HttpClient } from '@angular/common/http';
 
 
 
@@ -14,43 +15,59 @@ import { SharedService } from 'src/app/shared.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+
+  ngOnInit(): void {
+    // Initialization logic here
+  }
+
   username: string = '';
   email: string = '';
-
-  // Properties for storing course and interest data
+  major: string = '';
+  quote: string = '';
   courses: string[] = [];
   interests: string[] = [];
+  showForm: boolean = false;
+  profilePic: File | null = null;
 
-  // Properties for storing the values of the new course and new interest input fields
-  newCourse: string = '';
-  newInterest: string = '';
-
-  constructor(private sharedService: SharedService) { }
-
-  ngOnInit() {
-    // Use the service to get the shared variable
+  constructor(private sharedService: SharedService, private http: HttpClient) {
     this.username = this.sharedService.getSharedVariable();
     console.log('Shared variable:', this.sharedService.getSharedVariable());
-  
+
     this.email = this.sharedService.getSecondSharedVariable();
     console.log('Second shared variable:', this.sharedService.getSecondSharedVariable());
-  
+
     console.log(this.username);
     console.log(this.email);
   }
 
-  // Functions to add course and interest
-  addCourse(): void {
-    if (this.newCourse && !this.courses.includes(this.newCourse)) {
-      this.courses.push(this.newCourse);
-      this.newCourse = ''; // Reset the newCourse input field
+  onFileSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files.length > 0) {
+      this.profilePic = inputElement.files[0]; // Update profilePic with the selected file
+    } else {
+      this.profilePic = null; // If no file is selected, set profilePic to null
     }
   }
 
-  addInterest(): void {
-    if (this.newInterest && !this.interests.includes(this.newInterest)) {
-      this.interests.push(this.newInterest);
-      this.newInterest = ''; // Reset the newInterest input field
+  submitForm() {
+    const formData = new FormData();
+    formData.append('major', this.major);
+    formData.append('quote', this.quote);
+    formData.append('courses', this.courses.join(', '));
+    formData.append('interests', this.interests.join(', '));
+    if (this.profilePic) {
+      formData.append('profilePic', this.profilePic);
     }
+
+    this.http.post('http://localhost/profile.php', formData)
+      .subscribe(response => {
+        // handle successful response
+        console.log(response);
+      }, error => {
+        // handle error response
+        console.error(error);
+      });
+
+    this.showForm = false;
   }
 }
