@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +13,7 @@ import { SharedService } from 'src/app/shared.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   
   constructor(private router: Router, private http: HttpClient,private sharedService: SharedService) { }
   ngOnInit() {
@@ -40,10 +40,13 @@ export class LoginComponent {
     .subscribe({
       next: (response) => {
         console.log('Response:', response);  // Log the response
+        console.log('User:', response.user);  // Log the user
   
         if (response && response.message === 'User exists') {
           console.log('User exists');
-          this.sharedService.setSharedVariable(response.user.Username);  // Set the shared variable
+          // If the login is successful, store the username and email in local storage
+          this.sharedService.setSharedVariable(this.username);
+          console.log(response.user);
           this.sharedService.setSecondSharedVariable(response.user.Email);
           this.sharedService.setThirdSharedVariable(response.user.UserID);
           this.onSubmit.emit(true);

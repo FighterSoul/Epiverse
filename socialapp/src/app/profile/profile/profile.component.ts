@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SharedService } from 'src/app/shared.service';
+
+
 
 
 @Component({
@@ -11,17 +13,10 @@ import { SharedService } from 'src/app/shared.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   username: string = '';
   email: string = '';
 
-  constructor(private sharedService: SharedService) { }
-  ngOnInit() {
-    // Use the service to get the shared variable
-    this.username = this.sharedService.getSharedVariable();
-    this.email=this.sharedService.getSecondSharedVariable();
-    console.log(this.username);
-  }
   // Properties for storing course and interest data
   courses: string[] = [];
   interests: string[] = [];
@@ -29,6 +24,20 @@ export class ProfileComponent {
   // Properties for storing the values of the new course and new interest input fields
   newCourse: string = '';
   newInterest: string = '';
+
+  constructor(private sharedService: SharedService) { }
+
+  ngOnInit() {
+    // Use the service to get the shared variable
+    this.username = this.sharedService.getSharedVariable();
+    console.log('Shared variable:', this.sharedService.getSharedVariable());
+  
+    this.email = this.sharedService.getSecondSharedVariable();
+    console.log('Second shared variable:', this.sharedService.getSecondSharedVariable());
+  
+    console.log(this.username);
+    console.log(this.email);
+  }
 
   // Functions to add course and interest
   addCourse(): void {
