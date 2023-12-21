@@ -2,6 +2,10 @@
 .wrapper {
   background-color: #282a36;
   color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 .container {
   width: 800px; /* Adjust the maximum width as needed */
@@ -31,6 +35,12 @@
 /* Style the profile picture */
 .card img {
   border: 4px solid #282a36; /* Dracula background color */
+  margin-bottom: 15px;
+}
+
+.btn-outline-primary {
+  margin-top: 15px;
+  margin-bottom: 20px;
 }
 
 /* Style the dropdowns */
@@ -53,9 +63,11 @@
   margin-top: 1.5rem;
 }
 
-/* Style the buttons */
-
-
+.text-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 /* Style the input fields */
 .input-group {
@@ -82,6 +94,12 @@
   transition: filter 0.3s ease; /* Add smooth transition for hover effect */
   border-radius: 25px;
 }
+
+.d-flex {
+  flex-direction: column;
+  align-items: center;
+}
+
 
 input {
   background: linear-gradient(to right, #6272a4, #44475a, #282a36); /* Dracula gradient colors */

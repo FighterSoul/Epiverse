@@ -1,70 +1,65 @@
 <div class="wrapper">
   <div class="container mt-4">
-  <!-- Profile Box -->
-  <div class="card">
+    <!-- Profile Box -->
+    <div class="card">
       <div class="card-body">
-          <div class="text-center">
-              <img src="assets/images/profilepic.png" alt="Profile Picture"
-                  class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
-              <h4 class="card-title">UserName:{{username}}</h4>
-              <p class="card-text">Email: {{email}}</p>
-              <p class="card-text">Major: {{major}}</p>
-              <p class="card-text">Quote: {{quote}}</p>
-              <p class="card-text">Courses: {{courses.join(', ')}}</p>
-              <p class="card-text">Interests: {{interests.join(', ')}}</p>
-              <!-- Add more profile information here -->
-              
-              <!-- Personal Information Button -->
-              <button class="btn btn-primary" (click)="showForm = !showForm">Personal</button>
+        <div class="text-center">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <img [src]="profilePicUrl" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
+            </div>
+            <div>
+              <button class="btn btn-outline-primary" (click)="fileInput.click()">Edit Picture</button>
+              <input type="file" #fileInput style="display: none" (change)="onFileChange($event)">
+            </div>
           </div>
-      </div>
-  </div>
-
-  <!-- Personal Information Form -->
-  <div *ngIf="showForm" class="card mt-4">
-    <div class="card-body">
-      <form (ngSubmit)="submitForm()" #form="ngForm">
-        <div class="mb-3">
-          <label for="major" class="form-label">Major</label>
-          <input type="text" id="major" [(ngModel)]="major" name="major" class="form-control">
-        </div>
-
-        <div class="mb-3">
-          <label for="quote" class="form-label">Quote</label>
-          <input type="text" id="quote" [(ngModel)]="quote" name="quote" class="form-control">
-        </div>
-
-        <div class="mb-3">
-          <label for="profilePic" class="form-label">Profile Picture</label>
-          <input type="file" id="profilePic" (change)="onFileSelected($event)" class="form-control">
-        </div>
-
-        <!-- Courses Dropdown -->
-        <div class="mb-3">
-          <label for="coursesDropdown" class="form-label">Courses</label>
-          <select class="form-select" id="coursesDropdown" multiple [(ngModel)]="courses">
-            <option *ngFor="let course of courses" [value]="course">{{ course }}</option>
-          </select>
-        </div>
-
-        <!-- Interests Dropdown -->
-        <div class="mb-3">
-          <label for="interestsDropdown" class="form-label">Interests</label>
-          <select class="form-select" id="interestsDropdown" multiple [(ngModel)]="interests">
-            <option *ngFor="let interest of interests" [value]="interest">{{ interest }}</option>
-          </select>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Additional Information Box -->
-  <div class="card mt-4">
-      <div class="card-body">
-          <h5 class="card-title">Additional Information</h5>
+          <h4 class="card-title">UserName:{{username}}</h4>
+          <p class="card-text">Email: {{email}}</p>
+          <p class="card-text">Major: {{major}}</p>
+          <p class="card-text">Quote: {{quote}}</p>
+          <p class="card-text">Courses: {{courses}}</p>
+          <p class="card-text">Interests: {{interests}}</p>
           <!-- Add more profile information here -->
+          <button class="btn btn-outline-primary mt-3" (click)="showForm = !showForm">Edit Profile</button>
+        </div>
       </div>
+    </div>
+
+    <!-- Personal Information Form -->
+    <div *ngIf="showForm" class="card mt-4">
+      <div class="card-body">
+        <form (ngSubmit)="submitForm()" #form="ngForm">
+          <div class="mb-3">
+            <label for="major" class="form-label">Major</label>
+            <input type="text" id="major" [(ngModel)]="major" name="major" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label for="quote" class="form-label">Quote</label>
+            <input type="text" id="quote" [(ngModel)]="quote" name="quote" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label for="coursesInput" class="form-label">Courses</label>
+            <input type="text" id="coursesInput" [(ngModel)]="courses" name="courses" class="form-control" placeholder="Enter courses separated by commas">
+          </div>
+
+          <div class="mb-3">
+            <label for="interestsInput" class="form-label">Interests</label>
+            <input type="text" id="interestsInput" [(ngModel)]="interests" name="interests" class="form-control" placeholder="Enter interests separated by commas">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Additional Information Box -->
+    <div class="card mt-4">
+      <div class="card-body">
+        <h5 class="card-title">Additional Information</h5>
+        <!-- Add more profile information here -->
+      </div>
+    </div>
   </div>
 </div>
